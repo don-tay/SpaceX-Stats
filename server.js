@@ -3,11 +3,15 @@ const colors = require('colors');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const graphqlHTTP = require('express-graphql');
+const cors = require('cors');
 const schema = require('./schema');
 
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
+
+// Mount cors
+app.use(cors());
 
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {

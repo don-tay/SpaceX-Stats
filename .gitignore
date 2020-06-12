@@ -3,3 +3,6 @@ config/config.env
 
 # packages
 node_modules/
+
+# react build folder
+/client
