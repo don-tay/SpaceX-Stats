@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "SpaceX launch stats",
   "main": "server.js",
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "yarn --cwd client start",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "heroku-postbuild": "YARN_PRODUCTION=false yarn install && yarn --cwd client install && yarn --cwd client build && rm -rf ./public && mv ./client/build ./public/build"
   },
   "author": "Don Tay",
   "license": "MIT",

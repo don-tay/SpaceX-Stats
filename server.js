@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
 const schema = require('./schema');
+const path = require('path');
 
 dotenv.config({ path: './config/config.env' });
 
@@ -15,7 +16,7 @@ app.use(cors());
 
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
 }
 
 app.use(
@@ -23,10 +24,19 @@ app.use(
   graphqlHTTP({
     schema,
     graphiql: true,
-  }),
+  })
 );
 
+app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold));
+app.listen(5000, () =>
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+  )
+);
